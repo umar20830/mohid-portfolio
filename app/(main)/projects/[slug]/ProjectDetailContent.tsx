@@ -14,10 +14,13 @@ import {
 } from '@/components/ui';
 import { CTASection } from '@/components/sections';
 import { caseStudies } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 import { useReducedMotion } from '@/hooks';
+import Image from 'next/image';
+import { Project } from '@/lib/projects-data';
 
 interface ProjectDetailContentProps {
-    project: typeof caseStudies[0];
+    project: Project;
 }
 
 export function ProjectDetailContent({ project }: ProjectDetailContentProps) {
@@ -78,71 +81,75 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps) {
                                     <p className="text-xs uppercase tracking-widest font-bold text-muted-foreground mb-1">Duration</p>
                                     <p className="text-xl font-bold text-foreground">{project.duration}</p>
                                 </div>
-                                {project.industry.includes('E-commerce') && (
-                                    <div className="pt-4">
-                                        <p className="text-xs uppercase tracking-widest font-bold text-muted-foreground mb-1">Focus</p>
-                                        <p className="text-xl font-bold text-foreground">ROI Growth</p>
+                            </div>
+
+                            {/* Results Grid - Efficient & Clear */}
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 mt-12 pt-8 border-t border-border/50">
+                                {project.results.map((result) => (
+                                    <div key={result.metric} className="flex flex-col space-y-3">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center">
+                                                <TrendingUpIcon size={14} className="text-primary" />
+                                            </div>
+                                            <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest leading-none">
+                                                {result.metric}
+                                            </p>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <p className="text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-none">
+                                                {result.change === 'Done' ? result.after : result.change}
+                                            </p>
+                                            {result.before !== '-' && (
+                                                <div className="flex items-center gap-2 text-xs font-medium text-primary/80">
+                                                    <span>{result.before}</span>
+                                                    <span className="text-muted-foreground/30">→</span>
+                                                    <span className="text-primary">{result.after}</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                )}
+                                ))}
                             </div>
                         </div>
                     </motion.div>
                 </Container>
             </Section>
 
-            {/* Results Bar - Premium Overlay */}
-            <div className="relative z-20 -mt-12">
-                <Container size="wide">
-                    <motion.div
-                        className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 bg-card border border-border rounded-2xl p-6 md:p-10 shadow-2xl"
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                    >
-                        {project.results.map((result) => (
-                            <div key={result.metric} className="text-center md:text-left">
-                                <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
-                                    <TrendingUpIcon size={20} className="text-primary" />
-                                    <span className="text-3xl md:text-4xl font-bold text-primary tabular-nums">
-                                        {result.change}
-                                    </span>
-                                </div>
-                                <p className="text-sm font-bold text-foreground uppercase tracking-tight">{result.metric}</p>
-                                <p className="text-xs text-muted-foreground mt-1">
-                                    From {result.before} to {result.after}
-                                </p>
-                            </div>
-                        ))}
-                    </motion.div>
-                </Container>
-            </div>
 
             {/* Main Content Sections */}
             <Section className="relative z-10 pt-16 md:pt-24">
                 <Container size="wide">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
 
-                        {/* Visual/Image Placeholder */}
+                        {/* Visuals / Gallery */}
                         <div className="lg:col-span-12">
                             <motion.div
-                                className="relative aspect-[21/9] rounded-3xl overflow-hidden bg-muted group"
-                                initial={{ opacity: 0, scale: 0.98 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
+                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8 }}
                             >
-                                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/5 to-accent/5">
+                                {project.images.map((img, idx) => (
                                     <motion.div
-                                        className="text-[150px] md:text-[250px] text-primary/10 font-black italic"
-                                        whileHover={{ scale: 1.05, rotate: -2 }}
-                                        transition={{ type: 'spring', stiffness: 100 }}
+                                        key={idx}
+                                        className={cn(
+                                            "relative aspect-[4/3] rounded-2xl overflow-hidden bg-muted group",
+                                            idx === 0 && "md:col-span-2 lg:col-span-2 md:aspect-video lg:aspect-video"
+                                        )}
+                                        whileHover={{ y: -5 }}
+                                        transition={{ duration: 0.3 }}
                                     >
-                                        {project.client.charAt(0)}
+                                        <Image
+                                            src={img}
+                                            alt={`${project.title} - screen ${idx + 1}`}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                     </motion.div>
-                                </div>
-                                <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent" />
-                                <div className="absolute inset-0 border border-white/10 rounded-3xl pointer-events-none" />
+                                ))}
                             </motion.div>
                         </div>
 
@@ -171,9 +178,6 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps) {
                                 >
                                     <h3 className="text-2xl font-bold mb-6 text-foreground">The Challenge</h3>
                                     <div className="p-8 rounded-2xl bg-muted/30 border border-border/50 relative overflow-hidden group">
-                                        <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                                            <TrendingUpIcon size={64} className="rotate-180" />
-                                        </div>
                                         <p className="text-muted-foreground leading-relaxed relative z-10">
                                             {project.challenge}
                                         </p>
@@ -188,9 +192,6 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps) {
                                 >
                                     <h3 className="text-2xl font-bold mb-6 text-foreground">The Solution</h3>
                                     <div className="p-8 rounded-2xl bg-primary/5 border border-primary/20 relative overflow-hidden group">
-                                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                            <TrendingUpIcon size={64} />
-                                        </div>
                                         <p className="text-muted-foreground leading-relaxed relative z-10">
                                             {project.solution}
                                         </p>
@@ -208,7 +209,6 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps) {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                 >
-                                    <div className="absolute top-4 left-4 text-6xl text-primary/10 font-serif leading-none">"</div>
                                     <p className="text-lg italic text-foreground relative z-10 mb-6">
                                         {project.testimonial.quote}
                                     </p>
