@@ -158,32 +158,43 @@ export function ZCaseStudiesSection() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto h-full">
           {caseStudies.slice(0, 2).map((study) => (
             <div
               key={study.id}
               className={cn(
                 'p-6 rounded-2xl bg-card/80 backdrop-blur-sm border border-border',
-                'hover:border-primary/50 transition-colors duration-200'
+                'hover:border-primary/50 transition-colors duration-200',
+                'flex flex-col'
               )}
             >
-              <div className="flex items-center gap-3 mb-4">
-                <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">
-                  {study.industry}
-                </span>
-                <span className="text-sm text-muted-foreground">{study.duration}</span>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">
+                    {study.industry}
+                  </span>
+                  <span className="text-sm text-muted-foreground">{study.duration}</span>
+                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-3">{study.title}</h3>
+                <p className="text-muted-foreground mb-6">{study.description}</p>
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">{study.title}</h3>
-              <p className="text-muted-foreground mb-6">{study.description}</p>
 
               <div className="grid grid-cols-2 gap-4">
                 {study.results.slice(0, 2).map((result) => (
-                  <div key={result.metric} className="bg-muted/50 rounded-lg p-3">
-                    <div className="flex items-center gap-2">
-                      <TrendingUpIcon size={16} className="text-accent" />
-                      <span className="font-bold text-accent">{result.change}</span>
+                  <div key={result.metric} className="bg-muted/50 rounded-lg p-4 flex flex-col min-h-[100px]">
+                    <div className="flex-1 flex flex-col items-center justify-center text-center">
+                      <div className="flex items-center justify-center gap-2 mb-1">
+                        <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center">
+                          <TrendingUpIcon size={14} className="text-primary" />
+                        </div>
+                        <span className="text-lg font-bold text-foreground">
+                          {result.after}
+                        </span>
+                      </div>
                     </div>
-                    <div className="text-sm text-muted-foreground mt-1">{result.metric}</div>
+                    <div className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground text-center whitespace-nowrap pt-2 border-t border-border/10">
+                      {result.metric}
+                    </div>
                   </div>
                 ))}
               </div>

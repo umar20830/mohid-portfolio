@@ -97,7 +97,7 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps) {
                                         </div>
                                         <div className="space-y-1">
                                             <p className="text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-none">
-                                                {result.change === 'Done' ? result.after : result.change}
+                                                {result.after}
                                             </p>
                                             {result.before !== '-' && (
                                                 <div className="flex items-center gap-2 text-xs font-medium text-primary/80">

@@ -44,7 +44,7 @@ const rawProjects = [
         Client: 'Autoverse',
         Duration: '3 months',
         Focus: 'UX & Customers calls',
-        'Organic Visits': '650+/mo',
+        'Organic Visits': '52000+',
         'Keyword ranking': '#1 for "Luxury Car Rental"',
         'Revenue from Organic': '$50,000+/mo',
         'Domain Authority': 'N/A',
@@ -69,10 +69,10 @@ const rawProjects = [
         Client: 'Kritical Towing',
         Duration: '4 months',
         Focus: 'Local SEO & GMB',
-        'Organic Views': '5000+',
+        'Organic Views': '5200+',
         'Keyword ranking': 'Top 3 Map Pack',
         'Revenue from Organic': '$20,000/mo',
-        'Domain Authority': '0',
+        
         'Project overview': 'Redesigned the website and implemented a targeted Local SEO strategy for Kritical Towing to improve local search visibility, Google Maps presence, and inbound towing calls.',
         'the challenge': 'The website was outdated with a poor user experience and low conversions, local visibility for towing-related keywords was weak, and inbound leads from organic and local search were limited.',
         'The Solution': 'Redesigned the website with a mobile-first, conversion-focused structure, optimized service pages using high-intent local towing keywords, implemented on-page local SEO with internal linking and location signals, improved technical SEO to support indexing, speed, and performance, and set up tracking to measure local traffic and lead performance.',
@@ -124,7 +124,7 @@ const rawProjects = [
         'Organic Visits': '1600+',
         'Keyword ranking': '#1 "Towing near me"',
         'Revenue from Organic': '$10,000/mo',
-        'Domain Authority': '0',
+        
         'Project overview': 'Redesigned the website and implemented a focused Local SEO strategy for Patriots Towing to improve local search visibility, increase Google Maps presence, and drive more inbound towing calls.',
         'the challenge': 'The website was outdated with poor user experience and low conversions, local search visibility for towing-related keywords was weak, and inbound leads from organic and local search were limited.',
         'The Solution': 'Redesigned the website with a mobile-first, conversion-focused structure, optimized service pages with high-intent local towing keywords, implemented on-page local SEO with internal linking and location signals, improved technical SEO to support crawling, indexing, and speed, and set up tracking to measure local traffic and lead performance.',
@@ -151,7 +151,6 @@ const rawProjects = [
         'Organic Traffic': '7900+',
         'Keyword ranking': '#2 Map Pack',
         'Revenue from Organic': '$20,000/mo',
-        'Domain Authority': '31',
         'Project overview': 'Designed a conversion-focused website and implemented a complete SEO and Local SEO strategy for W Towing to improve online visibility, Google Maps rankings, and inbound call volume.',
         'the challenge': 'There was no professionally designed website to support conversions, organic rankings for towing-related keywords were low, and an under-optimized Google Business Profile was limiting local reach.',
         'The Solution': 'Designed and developed a mobile-first, fast-loading website focused on lead generation, optimized service pages using high-intent local towing keywords, fully optimized the Google Business Profile including categories, services, descriptions, and images, and implemented on-page SEO with internal linking and local ranking signals.',
@@ -175,9 +174,8 @@ const rawProjects = [
         Duration: '4 months',
         Focus: 'Authority & Trust',
         'Organic Traffic': '1,800/mo',
-        'Keyword ranking': 'First Page "Legal Firm"',
+        'Keyword ranking': 'First Page "Auto Body Shop"',
         'Revenue from Organic': '$65,000/mo',
-        'Domain Authority': '40',
         'Project overview': 'Implemented a targeted Local SEO and Google Business Profile optimization strategy for Moore and Sturgis to improve Google Maps visibility, attract high-intent local customers, and increase service inquiries.',
         'the challenge': 'Visibility in Google Maps for auto body repair keywords was low, the Google Business Profile was under-optimized, and inbound calls and direction requests from local search were limited.',
         'The Solution': 'Fully optimized the Google Business Profile including categories, services, description, and attributes, implemented local keyword optimization for auto body and collision repair services, improved service area and business information accuracy, added optimized images to enhance engagement and trust, and applied ongoing optimization best practices to improve rankings and visibility.',
@@ -203,7 +201,6 @@ const rawProjects = [
         'Organic Traffic': '2300+',
         'Keyword ranking': '#1 "Dumpster Rental"',
         'Revenue from Organic': '$20,000/mo',
-        'Domain Authority': '36',
         'Project overview': 'Redesigned the website and executed a complete SEO and Local SEO strategy for Austin Dumpster to increase local search visibility, improve lead quality, and drive consistent inbound inquiries.',
         'the challenge': 'The website was outdated with poor structure and low conversion rates, organic visibility for dumpster rental keywords was limited, and the Google Business Profile was under-optimized, affecting local rankings.',
         'The Solution': 'Redesigned the website with a clean, mobile-first, conversion-focused layout, optimized service and location pages using targeted local SEO keywords, fully optimized the Google Business Profile including categories, services, descriptions, and images, implemented on-page SEO with internal linking and local ranking signals, and improved technical SEO to support indexing and overall performance.',
@@ -319,7 +316,7 @@ export const projects: Project[] = rawProjects.map(p => {
 
     const addMetric = (val: any, label: string) => {
         if (val && val !== 'N/A') {
-            results.push({ metric: label, before: '-', after: val, change: 'Done' });
+            results.push({ metric: label, before: '-', after: val, change: '' });
         }
     };
 

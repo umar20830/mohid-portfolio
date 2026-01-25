@@ -189,16 +189,18 @@ function ProjectCard({ study, index }: { study: any; index: number }) {
             {/* Results Grid */}
             <div className="grid grid-cols-2 gap-4 mb-6">
               {study.results.map((result: any) => (
-                <div key={result.metric} className="bg-muted/50 rounded-lg p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center">
-                      <TrendingUpIcon size={14} className="text-primary" />
+                <div key={result.metric} className="bg-muted/50 rounded-lg p-4 flex flex-col min-h-[100px]">
+                  <div className="flex-1 flex flex-col items-center justify-center text-center">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center">
+                        <TrendingUpIcon size={14} className="text-primary" />
+                      </div>
+                      <span className="text-lg font-bold text-foreground">
+                        {result.after}
+                      </span>
                     </div>
-                    <span className="text-lg font-bold text-foreground">
-                      {result.after}
-                    </span>
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground">
+                  <div className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground text-center whitespace-nowrap pt-2 border-t border-border/10">
                     {result.metric}
                   </div>
                 </div>
