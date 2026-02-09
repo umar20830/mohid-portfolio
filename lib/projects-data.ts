@@ -72,7 +72,7 @@ const rawProjects = [
         'Organic Views': '5200+',
         'Keyword ranking': 'Top 3 Map Pack',
         'Revenue from Organic': '$20,000/mo',
-        
+
         'Project overview': 'Redesigned the website and implemented a targeted Local SEO strategy for Kritical Towing to improve local search visibility, Google Maps presence, and inbound towing calls.',
         'the challenge': 'The website was outdated with a poor user experience and low conversions, local visibility for towing-related keywords was weak, and inbound leads from organic and local search were limited.',
         'The Solution': 'Redesigned the website with a mobile-first, conversion-focused structure, optimized service pages using high-intent local towing keywords, implemented on-page local SEO with internal linking and location signals, improved technical SEO to support indexing, speed, and performance, and set up tracking to measure local traffic and lead performance.',
@@ -97,7 +97,7 @@ const rawProjects = [
         Focus: 'Lead Generation',
         'Organic Traffic': '1500+',
         'Keyword ranking': '#1 "Gutter Repair"',
-        'Revenue from Organic': '$5,000/in first month',
+        'Revenue from Organic': '$10,000/in first month',
         'Domain Authority': 'N/A',
         'Project overview': 'Developed a high-conversion website and executed a complete SEO and Local SEO strategy for Malibu Gutters to improve local search visibility, Google Maps rankings, and inbound service inquiries.',
         'the challenge': 'There was no professionally developed website to support lead generation, organic and local visibility for gutter service keywords was low, and an under-optimized Google Business Profile was limiting local reach.',
@@ -124,7 +124,7 @@ const rawProjects = [
         'Organic Visits': '1600+',
         'Keyword ranking': '#1 "Towing near me"',
         'Revenue from Organic': '$10,000/mo',
-        
+
         'Project overview': 'Redesigned the website and implemented a focused Local SEO strategy for Patriots Towing to improve local search visibility, increase Google Maps presence, and drive more inbound towing calls.',
         'the challenge': 'The website was outdated with poor user experience and low conversions, local search visibility for towing-related keywords was weak, and inbound leads from organic and local search were limited.',
         'The Solution': 'Redesigned the website with a mobile-first, conversion-focused structure, optimized service pages with high-intent local towing keywords, implemented on-page local SEO with internal linking and location signals, improved technical SEO to support crawling, indexing, and speed, and set up tracking to measure local traffic and lead performance.',
@@ -160,8 +160,9 @@ const rawProjects = [
     },
     {
         id: 'moore-sturgis',
-        thumbnail: '/moore and sturgis/Moore and sturgis website Clicks.png',
+        thumbnail: '/moore and sturgis/Moore and sturgis website.png',
         images: [
+            '/moore and sturgis/Moore and sturgis website.png',
             '/moore and sturgis/Moore and sturgis website Clicks.png',
             '/moore and sturgis/Moore and sturgis Calls.png',
             '/moore and sturgis/Moore and sturgis directions.png',
@@ -185,9 +186,9 @@ const rawProjects = [
     },
     {
         id: 'austin-dumpster',
-        thumbnail: '/Austin Dumpster/Austin Dumpster website.png',
+        thumbnail: '/Austin Dumpster/Austin dumpster website.png',
         images: [
-            '/Austin Dumpster/Austin Dumpster website.png',
+            '/Austin Dumpster/Austin dumpster website.png',
             '/Austin Dumpster/Austin dumpster calls.png',
             '/Austin Dumpster/Austin dumpster overview views.png',
             '/Austin Dumpster/Austin dumpster overview.png',
@@ -298,9 +299,9 @@ const rawProjects = [
         Client: 'Various Local Businesses',
         Duration: '1 month',
         Focus: 'Local SEO & AI visibility',
-        'Organic Traffic': '25,000/mo (Aggregated)',
+        'Organic Traffic': '10,000/mo (Aggregated)',
         'Keyword ranking': '',
-        'Revenue from Organic': '+$200k Impact overall',
+        'Revenue from Organic': '+$50k Impact overall',
         'Domain Authority': 'N/A',
         'Project overview': 'A comprehensive approach to managing and optimizing listings across 50+ directories including Google, Bing, and Yelp.',
         'the challenge': 'Businesses need business listings on some of the strongest directories to improve their visibility and rankings.',
