@@ -423,6 +423,15 @@ body {
   padding-bottom: var(--space-6);
 }
 
+/* Custom Utilities */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @media (min-width: 768px) {
   .section-py {
     padding-top: var(--space-7);

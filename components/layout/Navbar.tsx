@@ -24,10 +24,16 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark') ||
-      (!document.documentElement.classList.contains('light') &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const savedTheme = localStorage.getItem('theme');
+    const isDark = savedTheme === 'dark' ||
+      (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
     setIsDarkMode(isDark);
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }, []);
 
   const toggleDarkMode = () => {
@@ -36,9 +42,11 @@ export function Navbar() {
     if (newMode) {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
       document.documentElement.classList.add('light');
+      localStorage.setItem('theme', 'light');
     }
   };
 
@@ -48,7 +56,7 @@ export function Navbar() {
     <>
       <motion.header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+          'fixed top-0 left-0 right-0 z-[100] transition-all duration-300',
           isScrolled
             ? 'bg-background/80 backdrop-blur-lg border-b border-border shadow-sm'
             : 'bg-transparent'

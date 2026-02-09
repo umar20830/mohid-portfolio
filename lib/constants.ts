@@ -1,3 +1,5 @@
+import { projects } from './projects-data';
+
 export const siteConfig = {
   name: 'Mohid Ali',
   title: 'Mohid Ali | Professional SEO Specialist',
@@ -109,96 +111,7 @@ export const services = [
   },
 ];
 
-export const caseStudies = [
-  {
-    id: 'ecommerce-growth',
-    title: 'E-commerce Traffic Explosion',
-    client: 'Fashion Retail Brand',
-    industry: 'E-commerce / Fashion',
-    duration: '8 months',
-    thumbnail: '/projects/ecommerce-case-study.jpg',
-    description: 'Transformed an underperforming e-commerce store into a traffic powerhouse through comprehensive technical SEO fixes and content strategy.',
-    challenge: 'The client was struggling with declining organic traffic, poor Core Web Vitals scores, and losing ground to competitors in search rankings.',
-    solution: 'Implemented a full technical SEO overhaul including site speed optimization, structured data implementation, and a content hub strategy targeting high-intent keywords.',
-    results: [
-      { metric: 'Organic Traffic', before: '25K', after: '180K', change: '+620%' },
-      { metric: 'Keyword Rankings', before: '150', after: '1,200+', change: '+700%' },
-      { metric: 'Revenue from Organic', before: '$50K', after: '$420K', change: '+740%' },
-      { metric: 'Domain Authority', before: '28', after: '52', change: '+86%' },
-    ],
-    testimonial: {
-      quote: 'Mohid transformed our online presence. The results exceeded our expectations.',
-      author: 'Sarah Johnson',
-      role: 'Marketing Director',
-    },
-  },
-  {
-    id: 'saas-rankings',
-    title: 'SaaS Keyword Domination',
-    client: 'B2B Software Company',
-    industry: 'SaaS / Technology',
-    duration: '12 months',
-    thumbnail: '/projects/saas-case-study.jpg',
-    description: 'Helped a B2B SaaS company achieve first-page rankings for highly competitive industry keywords and establish thought leadership.',
-    challenge: 'The company had minimal organic visibility in a highly competitive market with well-funded competitors dominating search results.',
-    solution: 'Developed a comprehensive content strategy with pillar pages, implemented technical SEO improvements, and built high-authority backlinks through digital PR.',
-    results: [
-      { metric: 'Organic Traffic', before: '8K', after: '95K', change: '+1,087%' },
-      { metric: 'MQLs from Organic', before: '45', after: '380', change: '+744%' },
-      { metric: 'Featured Snippets', before: '2', after: '28', change: '+1,300%' },
-      { metric: 'Avg. Position', before: '42', after: '8.5', change: '+394%' },
-    ],
-    testimonial: {
-      quote: 'The SEO strategy Mohid implemented became our primary lead generation channel.',
-      author: 'Michael Chen',
-      role: 'CEO',
-    },
-  },
-  {
-    id: 'local-business',
-    title: 'Local Market Takeover',
-    client: 'Multi-Location Dental Practice',
-    industry: 'Healthcare / Local Business',
-    duration: '6 months',
-    thumbnail: '/projects/local-case-study.jpg',
-    description: 'Dominated local search results for a dental practice with multiple locations, driving a significant increase in new patient appointments.',
-    challenge: 'The practice was invisible in local search results, losing potential patients to competitors with better online visibility.',
-    solution: 'Optimized Google Business Profiles for all locations, built local citations, implemented location-specific landing pages, and developed a review generation strategy.',
-    results: [
-      { metric: 'Google Map Pack Rankings', before: '#15', after: '#1-3', change: 'Top 3' },
-      { metric: 'Monthly Calls', before: '85', after: '420', change: '+394%' },
-      { metric: 'New Patients', before: '22', after: '95', change: '+332%' },
-      { metric: 'Google Reviews', before: '45', after: '280', change: '+522%' },
-    ],
-    testimonial: {
-      quote: 'Our phones started ringing off the hook. Best investment we\'ve made for our practice.',
-      author: 'Dr. Emily Roberts',
-      role: 'Practice Owner',
-    },
-  },
-  {
-    id: 'content-authority',
-    title: 'Content Authority Building',
-    client: 'Financial Services Firm',
-    industry: 'Finance / Professional Services',
-    duration: '10 months',
-    thumbnail: '/projects/finance-case-study.jpg',
-    description: 'Built topical authority in the competitive financial services space through strategic content creation and link building.',
-    challenge: 'The firm had no content strategy and was competing against established financial publications with decades of authority.',
-    solution: 'Created a comprehensive content hub strategy, produced expert-level financial guides, and secured backlinks from authoritative financial publications.',
-    results: [
-      { metric: 'Organic Traffic', before: '5K', after: '78K', change: '+1,460%' },
-      { metric: 'Backlinks', before: '120', after: '2,400', change: '+1,900%' },
-      { metric: 'Leads Generated', before: '15', after: '180', change: '+1,100%' },
-      { metric: 'Brand Searches', before: '200', after: '3,500', change: '+1,650%' },
-    ],
-    testimonial: {
-      quote: 'Mohid helped us become the go-to resource in our industry.',
-      author: 'James Wilson',
-      role: 'Managing Partner',
-    },
-  },
-];
+export const caseStudies = projects;
 
 export const skills = [
   'Technical SEO',

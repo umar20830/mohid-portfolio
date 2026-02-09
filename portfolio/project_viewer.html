@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Case Studies Viewer</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --success: #22c55e;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        header {
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: #334155;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid #475569;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #475569;
+            transform: translateY(-2px);
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #334155;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent);
+        }
+
+        .card-image-container {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            opacity: 0.9;
+        }
+
+        .card:hover .card-image {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin: 0 0 0.5rem;
+            line-height: 1.3;
+        }
+
+        .card-client {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            background: #0f172a;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            display: block;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .metric-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .card-desc-block {
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .testimonial-block {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid #334155;
+            font-style: italic;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .testimonial-author {
+            display: block;
+            margin-top: 0.5rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.8rem;
+        }
+
+        .id-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(4px);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-family: monospace;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Error state */
+        .error-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        .error-box {
+            background: #ef4444;
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div id="error-alert" class="error-overlay">
+        <div class="error-box">
+            <h2>⚠️ File Access Error</h2>
+            <p>Cannot load <code>projects.js</code>. This is likely a CORS issue because you are opening the HTML file directly.</p>
+            <p><strong>Fix:</strong> Open this folder in VS Code and use the "Live Server" extension, or run <code>npx serve</code> in this directory.</p>
+        </div>
+    </div>
+
+    <header>
+        <div>
+            <h1>Portfolio Project Viewer</h1>
+            <div class="subtitle">Reviewing case study data from <code>projects.js</code></div>
+        </div>
+        <div class="controls">
+            <button class="btn" onclick="window.location.reload()">Refresh Data</button>
+            <a href="projects.js" class="btn" target="_blank">View Raw JS</a>
+        </div>
+    </header>
+
+    <div id="grid" class="grid">
+        <!-- Projects injected here -->
+    </div>
+
+    <script type="module">
+        import projects from './projects.js';
+
+        const grid = document.getElementById('grid');
+
+        // Render projects
+        try {
+            if (!projects || projects.length === 0) {
+                grid.innerHTML = '<p style="text-align:center;">No projects found in projects.js</p>';
+            } else {
+                projects.forEach(project => {
+                    const card = document.createElement('article');
+                    card.className = 'card';
+
+                    // Fix path for local viewing if needed (remove leading slash if it fails, but web server usually handles it)
+                    // We'll strip the leading slash for the src attribute just in case we are in a subpath context
+                    const imgSrc = project.thumbnail.startsWith('/') ? '.' + project.thumbnail : project.thumbnail;
+
+                    card.innerHTML = `
+                        <div class="card-image-container">
+                            <span class="id-badge">${project.id}</span>
+                            <img src="${imgSrc}" alt="${project.title}" class="card-image" onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">
+                                <span>${project.industry}</span>
+                                <span>•</span>
+                                <span>${project.duration}</span>
+                            </div>
+                            <h2 class="card-title">${project.title}</h2>
+                            <div class="card-client">Client: ${project.client}</div>
+
+                            <div class="metrics-grid">
+                                ${project.results.map(r => `
+                                    <div class="metric">
+                                        <span class="metric-value">${r.change}</span>
+                                        <span class="metric-label">${r.metric}</span>
+                                    </div>
+                                `).slice(0, 3).join('')}
+                            </div>
+
+                            <div class="card-desc-block">
+                                <span class="section-label">Challenge</span>
+                                <p class="card-text">${project.challenge}</p>
+                            </div>
+                            <div class="card-desc-block">
+                                <span class="section-label">Solution</span>
+                                <p class="card-text">${project.solution}</p>
+                            </div>
+
+                            ${project.testimonial ? `
+                                <div class="testimonial-block">
+                                    "${project.testimonial.quote}"
+                                    <span class="testimonial-author">- ${project.testimonial.author}, ${project.testimonial.role}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        } catch (e) {
+            console.error(e);
+            document.querySelector('.subtitle').innerHTML = `<span style="color:red">Error parsing data: ${e.message}</span>`;
+        }
+    </script>
+    <script>
+        // Check if module loaded. If not, script type=module failed likely due to CORS
+        window.addEventListener('error', (e) => {
+            if (e.message.includes('Module') || e.message.includes('CORS') || e.message.includes('Cross origin')) {
+               document.getElementById('error-alert').style.display = 'flex';
+            }
+        }, true);
+    </script>
+</body>
+</html>

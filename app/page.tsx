@@ -8,8 +8,8 @@ import {
   ZCaseStudiesSection,
   ZAboutSection,
   ZContactSection,
-  HamburgerMenu,
 } from '@/components/immersive';
+import { Navbar } from '@/components/layout';
 
 const sectionLabels = [
   'Hero',
@@ -23,7 +23,7 @@ const sectionLabels = [
 export default function HomePage() {
   return (
     <>
-      <HamburgerMenu />
+      <Navbar />
       <ZAxisScroll sectionLabels={sectionLabels}>
         <ZHeroSection />
         <ZHighlightsSection />

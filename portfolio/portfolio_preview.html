@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Case Studies</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --surface-dark: #111827;
+            --surface-light: #1f2937;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --accent: #10b981;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: #374151;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            margin: 0 0 1rem;
+            background: linear-gradient(135deg, #fff 0%, #9ca3af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- Grid --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background: var(--surface-dark);
+            border: 1px solid var(--border);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+
+        .card-img-wrapper {
+            height: 240px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--surface-dark) 0%, transparent 100%);
+            opacity: 0.6;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.08);
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            line-height: 1.3;
+            margin: 0 0 1rem;
+            font-weight: 600;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+
+        .card-info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-info-val {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* --- Modal (Detail View) --- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: var(--bg-dark);
+            width: 100%;
+            max-width: 1100px;
+            max-height: 90vh;
+            border-radius: 2rem;
+            border: 1px solid var(--border);
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Detail Content Styles */
+        .hero-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        }
+
+        .detail-body {
+            padding: 0 3rem 3rem;
+            margin-top: -80px;
+            position: relative;
+        }
+
+        .detail-header {
+            margin-bottom: 2rem;
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .detail-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            margin: 0 0 1rem;
+            line-height: 1.1;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 2fr 1.2fr;
+            gap: 3rem;
+        }
+
+        .content-block h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+            border-left: 3px solid var(--accent);
+            padding-left: 0.75rem;
+        }
+
+        .content-block p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            background: var(--surface-light);
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .metric-item {
+            padding: 1rem;
+            background: var(--bg-dark);
+            border-radius: 1rem;
+            text-align: center;
+        }
+
+        .metric-val {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .testimonial {
+            margin-top: 2rem;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            background: linear-gradient(to bottom right, var(--surface-light), var(--bg-dark));
+            border-radius: 1rem;
+        }
+
+        .quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .author {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .author-role {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Gallery */
+        .gallery-section {
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+        }
+
+        .gallery-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+            cursor: zoom-in;
+            transition: transform 0.2s;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.03);
+            border-color: var(--primary);
+        }
+
+        @media (max-width: 850px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
+                margin-bottom: 2rem;
+                order: -1;
+            }
+
+            .hero-img {
+                height: 200px;
+            }
+
+            .detail-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Portfolio Overview</h1>
+        <div class="subtitle">Showcasing digital impact across industries.</div>
+    </header>
+
+    <div class="container">
+        <div id="project-root" class="project-grid">
+            <!-- Cards injected via JS -->
+        </div>
+    </div>
+
+    <!-- Modal Template -->
+    <div id="modal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <div id="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- EMBEDDED DATA START ---
+        const projects = [
+            {
+                id: 'autoverse-rental',
+                thumbnail: 'autoverse/Autoverse rental car website.png',
+                images: [
+                    'autoverse/Autoverse rental car website.png',
+                    'autoverse/Autoverse rental car.png',
+                    'autoverse/Autoverse rental car calls.png',
+                    'autoverse/Autoverse rental car overivew views.png',
+                    'autoverse/Autoverse rental car Website click.png'
+                ],
+                tag: 'Car Rental & Automotive',
+                Title: 'Autoverse Rental Car - High-Performance Web Presence',
+                Client: 'Autoverse',
+                Duration: '3 months',
+                Focus: 'UX & Conversion Optimization',
+                'Organic Traffic': '15,000/mo',
+                'Keyword ranking': '#1 for "Luxury Car Rental"',
+                'Revenue from Organic': '$120,000/mo',
+                'Domain Authority': '42',
+                'Project overview': 'A complete digital transformation for a luxury car rental service, focusing on user experience, fleet showcasing, and booking conversion optimization.',
+                'the challenge': 'Autoverse struggled with low online visibility and a clunky booking process that deterred potential high-value clients and failed to showcase their premium fleet.',
+                'The Solution': 'We engineered a sleek, high-speed MERN stack application with real-time availability checking. The design focuses on visual storytelling to highlight the luxury vehicles.',
+                review: "Our fleet is fully booked weeks in advance now. The new site is a game-changer.",
+                reviewer: "James Wilson",
+                "reviewer designation": "Operations Director"
+            },
+            {
+                id: 'kritical-towing',
+                thumbnail: 'Kritical Towing/Kritical towing website.png',
+                images: [
+                    'Kritical Towing/Kritical towing website.png',
+                    'Kritical Towing/Kritical towing calls.png',
+                    'Kritical Towing/Kritical towing overview views.png',
+                    'Kritical Towing/Kritical towing overview.png'
+                ],
+                tag: 'Emergency Services',
+                Title: 'Kritical Towing - Local SEO Dominance',
+                Client: 'Kritical Towing',
+                Duration: '4 months',
+                Focus: 'Local SEO & GMB',
+                'Organic Traffic': '8,500/mo',
+                'Keyword ranking': 'Top 3 Map Pack',
+                'Revenue from Organic': '$45,000/mo',
+                'Domain Authority': '35',
+                'Project overview': 'Strategic Local SEO campaign and website overhaul to capture emergency roadside assistance queries in the target region.',
+                'the challenge': 'Despite 24/7 availability, Kritical Towing was invisible in local map packs, losing critical emergency calls to competitors with better digital footprints.',
+                'The Solution': 'Implemented a robust Local SEO strategy, optimized Google Business Profile, and built a mobile-first responsive website focused on "Click-to-Call".',
+                review: "The phone hasn't stopped ringing since the new site went live. We had to hire more drivers.",
+                reviewer: "Sarah Jenkins",
+                "reviewer designation": "Owner"
+            },
+            {
+                id: 'malibu-gutters',
+                thumbnail: 'malibu/Malibu gutters website.png',
+                images: [
+                    'malibu/Malibu gutters website.png',
+                    'malibu/Malibu calls.png',
+                    'malibu/Malibu gutters overview views.png',
+                    'malibu/Malibu gutters overview.png',
+                    'malibu/Malibu gutters website clicks.png'
+                ],
+                tag: 'Home Services',
+                Title: 'Malibu Gutters - Lead Gen Optimization',
+                Client: 'Malibu Gutters',
+                Duration: '2 months',
+                Focus: 'Lead Generation',
+                'Organic Traffic': '3,200/mo',
+                'Keyword ranking': '#1 "Gutter Repair"',
+                'Revenue from Organic': '$28,000/mo',
+                'Domain Authority': '29',
+                'Project overview': 'Targeted website design and SEO focused on capturing high-intent homeowners looking for premium gutter installation and repair.',
+                'the challenge': 'The client had a basic landing page that failed to convey trust or authority, resulting in expensive ad spend with very low ROI.',
+                'The Solution': 'Redesigned the site with a focus on trust signals, clear CTAs, and a portfolio showcase. Optimized for localized keywords for better organic reach.',
+                review: "We are finally getting quality leads that actually convert. The investment paid off in month one.",
+                reviewer: "Mike Roberts",
+                "reviewer designation": "Founder"
+            },
+            {
+                id: 'patriot-towing',
+                thumbnail: 'Patriot towing/Patriots towing website.png',
+                images: [
+                    'Patriot towing/Patriots towing website.png',
+                    'Patriot towing/Patriots towing Calls.png',
+                    'Patriot towing/Patriots towing overview views.png',
+                    'Patriot towing/Patriots towing overview.png',
+                    'Patriot towing/Patriots towing website clicks.png'
+                ],
+                tag: 'Automotive Services',
+                Title: 'Patriot Towing - Brand & Visibility Scale',
+                Client: 'Patriot Towing',
+                Duration: '5 months',
+                Focus: 'Branding & Commercial Contracts',
+                'Organic Traffic': '4,500/mo',
+                'Keyword ranking': '#1 "Heavy Duty Towing"',
+                'Revenue from Organic': '$85,000/mo',
+                'Domain Authority': '38',
+                'Project overview': 'A comprehensive rebranding and digital expansion project to establish Patriot Towing as the regional leader in heavy-duty recovery.',
+                'the challenge': 'Patriot Towing had a fragmented brand image and no cohesive online strategy, making it hard to secure commercial contracts.',
+                'The Solution': 'Unified the brand identity across all digital touchpoints. Developed a corporate-facing website section to attract B2B fleet contracts.',
+                review: "Our new professional look helped us secure a major contract with the city.",
+                reviewer: "David Anderson",
+                "reviewer designation": "CEO"
+            },
+            {
+                id: 'w-towing',
+                thumbnail: 'W towing/W towing overview website.png',
+                images: [
+                    'W towing/W towing overview website.png',
+                    'W towing/W towing calls.png',
+                    'W towing/W towing Directions.png',
+                    'W towing/W towing overview overview views.png',
+                    'W towing/W towing overview.png',
+                    'W towing/W towing Website click.png'
+                ],
+                tag: 'Emergency Services',
+                Title: 'W Towing - 24/7 Response Optimization',
+                Client: 'W Towing',
+                Duration: '3 months',
+                Focus: 'Speed & Mobile UX',
+                'Organic Traffic': '6,000/mo',
+                'Keyword ranking': '#2 Map Pack',
+                'Revenue from Organic': '$32,000/mo',
+                'Domain Authority': '31',
+                'Project overview': 'Performance-focused website build designed for speed and accessibility, ensuring stranded drivers can get help instantly.',
+                'the challenge': 'Slow load times and a non-mobile-friendly site were causing high bounce rates for users in emergency situations.',
+                'The Solution': 'Built a lightning-fast, AMP-ready site with prominent emergency call buttons and real-time dispatch integration capabilities.',
+                review: "Speed saves lives in our business. Mohid understood that and delivered.",
+                reviewer: "Greg Thompson",
+                "reviewer designation": "Manager"
+            },
+            {
+                id: 'moore-sturgis',
+                thumbnail: 'moore and sturgis/Moore and sturgis website Clicks.png',
+                images: [
+                    'moore and sturgis/Moore and sturgis website Clicks.png',
+                    'moore and sturgis/Moore and sturgis Calls.png',
+                    'moore and sturgis/Moore and sturgis directions.png',
+                    'moore and sturgis/Moore and sturgis overview views.png',
+                    'moore and sturgis/Moore and sturgis overview.png'
+                ],
+                tag: 'Legal & Professional',
+                Title: 'Moore & Sturgis - Professional Authority',
+                Client: 'Moore & Sturgis',
+                Duration: '4 months',
+                Focus: 'Authority & Trust',
+                'Organic Traffic': '1,800/mo',
+                'Keyword ranking': 'First Page "Legal Firm"',
+                'Revenue from Organic': '$65,000/mo',
+                'Domain Authority': '40',
+                'Project overview': 'Establishing digital authority for a boutique firm through content-led SEO and a distinguished, professional web design.',
+                'the challenge': 'The firm relied entirely on referrals and had zero digital footprint, limiting their ability to attract new, younger clientele.',
+                'The Solution': 'Crafted a content-rich, authoritative website with a blog for legal insights, integrated with a CRM for client intake management.',
+                review: "An elegant solution that perfectly represents the professionalism of our firm.",
+                reviewer: "Elizabeth Moore",
+                "reviewer designation": "Partner"
+            },
+            {
+                id: 'austin-dumpster',
+                thumbnail: 'Austin Dumpster/Austin Dumpster website.png',
+                images: [
+                    'Austin Dumpster/Austin Dumpster website.png',
+                    'Austin Dumpster/Austin dumpster calls.png',
+                    'Austin Dumpster/Austin dumpster overview views.png',
+                    'Austin Dumpster/Austin dumpster overview.png',
+                    'Austin Dumpster/Austin dumpster website click.png'
+                ],
+                tag: 'Waste Management',
+                Title: 'Austin Dumpster - Local Market Takeover',
+                Client: 'Austin Dumpster',
+                Duration: '3 months',
+                Focus: 'Hyper-Local SEO',
+                'Organic Traffic': '12,000/mo',
+                'Keyword ranking': '#1 "Dumpster Rental"',
+                'Revenue from Organic': '$95,000/mo',
+                'Domain Authority': '36',
+                'Project overview': 'Domination of the local waste management market through aggressive Local SEO and a high-converting quote request system.',
+                'the challenge': 'Highly competitive local market with established players. New customer acquisition costs were unsustainable.',
+                'The Solution': 'Deployed a hyper-local SEO campaign targeting specific neighborhoods. Streamlined the "Get a Quote" flow to increase conversions.',
+                review: "We are now the top result for every dumpster keyword in the city.",
+                reviewer: "Robert Chen",
+                "reviewer designation": "Owner"
+            },
+            {
+                id: 'listings-management',
+                thumbnail: 'Listings/Bing Places for Business Dashboard.png',
+                images: [
+                    'Listings/Bing Places for Business Dashboard.png',
+                    'Listings/apple maps listing.png',
+                    'Listings/Bing Places for Business.png'
+                ],
+                tag: 'Local SEO',
+                Title: 'Strategic Listings & GBP Optimization',
+                Client: 'Various Local Businesses',
+                Duration: 'Ongoing',
+                Focus: 'NAP Consistency',
+                'Organic Traffic': '25,000/mo (Aggregated)',
+                'Keyword ranking': 'Map Pack Dominance',
+                'Revenue from Organic': '+$200k Impact',
+                'Domain Authority': 'N/A',
+                'Project overview': 'A comprehensive approach to managing and optimizing listings across 50+ directories including Google, Bing, and Yelp.',
+                'the challenge': 'Inconsistent NAP (Name, Address, Phone) data across the web was hurting local rankings and confusing potential customers.',
+                'The Solution': 'Executed a massive cleanup and synchronization of business data. Implemented review management systems for reputation growth.',
+                review: "Our locations are finally showing up correctly everywhere. Foot traffic is up significantly.",
+                reviewer: "Maria Rodriguez",
+                "reviewer designation": "Marketing Mgr"
+            },
+            {
+                id: 'amar-towing',
+                thumbnail: 'amar towing/amar towing website.png',
+                images: [
+                    'amar towing/amar towing website.png',
+                    'amar towing/AMAR towing Calls.png',
+                    'amar towing/Amar towing Directions.png',
+                    'amar towing/Amar towing overview views.png',
+                    'amar towing/Amar towing overview.png'
+                ],
+                tag: 'Automotive Services',
+                Title: 'Amar Towing - Rapid Response UI',
+                Client: 'Amar Towing',
+                Duration: '3 months',
+                Focus: 'User Interface',
+                'Organic Traffic': '4,200/mo',
+                'Keyword ranking': '#3 "Tow Truck Near Me"',
+                'Revenue from Organic': '$38,000/mo',
+                'Domain Authority': '28',
+                'Project overview': 'User-centric design for a towing service, prioritizing specialized vehicle recovery and long-distance transport services.',
+                'the challenge': 'Potential customers were confused about service areas and capabilities due to a poorly structured legacy site.',
+                'The Solution': 'Clarified service offerings with a modern UI. Added an interactive service area map and instant quote estimator.',
+                review: "Clean, professional, and effective. Exactly what we needed.",
+                reviewer: "Amar Singh",
+                "reviewer designation": "Director"
+            },
+            {
+                id: 'atlanta-services',
+                thumbnail: 'atlanta/Atlanta Mobile Tire Shop.png',
+                images: [
+                    'atlanta/Atlanta Mobile Tire Shop.png',
+                    'atlanta/Atlanta Mobile Tire Shop calls.png',
+                    'atlanta/Atlanta Mobile Tire Shop overview views.png',
+                    'atlanta/Atlanta Mobile Tire Shop Website click.png'
+                ],
+                tag: 'Professional Services',
+                Title: 'Atlanta Mobile Tire Shop - Regional SEO',
+                Client: 'Atlanta Services Co.',
+                Duration: '6 months',
+                Focus: 'Regional Expansion',
+                'Organic Traffic': '9,500/mo',
+                'Keyword ranking': 'Top 5 Metro-wide',
+                'Revenue from Organic': '$75,000/mo',
+                'Domain Authority': '33',
+                'Project overview': 'Expanding digital footprint for a regional service provider to cover the entire metropolitan Atlanta area.',
+                'the challenge': 'The business was only ranking in their immediate suburb, missing out on the larger metropolitan market.',
+                'The Solution': 'Created location-specific landing pages and executed a content strategy targeting broader regional keywords.',
+                review: "We are now competing with the biggest names in Atlanta.",
+                reviewer: "Kevin Durrant",
+                "reviewer designation": "VP Marketing"
+            },
+            {
+                id: 'automotive-perfection',
+                thumbnail: 'automotive/Automotive perfection Website.png',
+                images: [
+                    'automotive/Automotive perfection Website.png',
+                    'automotive/Automotive perfection calls.png',
+                    'automotive/Automotive perfection overview views.png',
+                    'automotive/Automotive perfection overview.png',
+                    'automotive/Automotive perfection website directions.png'
+                ],
+                tag: 'Automotive Repair',
+                Title: 'Automotive Perfection - Service Optimization',
+                Client: 'Automotive Perfection',
+                Duration: '4 months',
+                Focus: 'Service Conversions',
+                'Organic Traffic': '5,000/mo',
+                'Keyword ranking': '#1 "Engine Repair"',
+                'Revenue from Organic': '$60,000/mo',
+                'Domain Authority': '25',
+                'Project overview': 'Total overhaul of the digital presence for a high-end auto repair shop, focusing on service booking and portfolio showcasing.',
+                'the challenge': 'The client was relying on word of mouth and had no way for customers to book appointments or view service capabilities online.',
+                'The Solution': 'Developed a booking-integrated website with a showcase of past repair projects to build trust and authority.',
+                review: "We are booked solid for three weeks out. The website is doing the selling for us.",
+                reviewer: "Tom Hardy",
+                "reviewer designation": "Lead Mechanic"
+            }
+        ];
+        // --- EMBEDDED DATA END ---
+
+        const root = document.getElementById('project-root');
+        const modal = document.getElementById('modal');
+        const modalBody = document.getElementById('modal-body');
+
+        // Render Grid
+        function renderGrid() {
+            root.innerHTML = projects.map((p, index) => {
+                const cleanThumb = p.thumbnail.startsWith('/') ? p.thumbnail.substring(1) : p.thumbnail;
+
+                return `
+                <article class="card" onclick="openModal(${index})">
+                    <div class="card-img-wrapper">
+                        <img src="${cleanThumb}" alt="${p.Title}" class="card-img" onerror="this.src='https://placehold.co/800x600/1e293b/FFFFFF?text=Image+Ref+Error'">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tags">
+                            <span>${p.tag}</span>
+                        </div>
+                        <h2 class="card-title">${p.Title}</h2>
+                        <p class="card-desc">${p['Project overview']}</p>
+                        
+                        <div class="card-info-row">
+                            <div class="card-info-item">
+                                <span class="card-info-label">CLIENT</span>
+                                <span class="card-info-val">${p.Client}</span>
+                            </div>
+                            <div class="card-info-item" style="text-align:right">
+                                <span class="card-info-label">FOCUS</span>
+                                <span class="card-info-val">${p.Focus}</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `}).join('');
+        }
+
+        // Open Modal
+        window.openModal = function (index) {
+            const p = projects[index];
+            const cleanThumb = p.thumbnail.startsWith('/') ? p.thumbnail.substring(1) : p.thumbnail;
+
+            modalBody.innerHTML = `
+                <img src="${cleanThumb}" alt="${p.Title}" class="hero-img">
+                <div class="detail-body">
+                    <div class="detail-header">
+                        <div class="detail-meta">
+                            <span>${p.Client}</span> • <span>${p.Duration}</span> • <span>${p.tag}</span>
+                        </div>
+                        <h2 class="detail-title">${p.Title}</h2>
+                    </div>
+
+                    <div class="detail-grid">
+                        <div class="content-col">
+                            <div class="content-block">
+                                <h3>The Challenge</h3>
+                                <p>${p['the challenge']}</p>
+                            </div>
+                            <div class="content-block">
+                                <h3>The Solution</h3>
+                                <p>${p['The Solution']}</p>
+                            </div>
+
+                            <div class="testimonial">
+                                <div class="quote">"${p.review}"</div>
+                                <div>
+                                    <span class="author">— ${p.reviewer}</span>
+                                    <br>
+                                    <span class="author-role">${p['reviewer designation']}</span>
+                                </div>
+                            </div>
+
+                            <div class="gallery-section">
+                                <h3 class="gallery-title">Project Gallery</h3>
+                                <div class="image-grid">
+                                    ${(p.images || [p.thumbnail]).map(img => {
+                const cleanImg = img.startsWith('/') ? img.substring(1) : img;
+                return `<img src="${cleanImg}" class="gallery-img" onclick="window.open(this.src, '_blank')" alt="Project screenshot">`;
+            }).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="metrics-col">
+                            <div class="metrics-grid">
+                                <div class="metric-item">
+                                    <span class="metric-val">${p['Organic Traffic']}</span>
+                                    <span class="metric-label">Organic Traffic</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-val">${p['Keyword ranking']}</span>
+                                    <span class="metric-label">Keyword Posiiton</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-val">${p['Revenue from Organic']}</span>
+                                    <span class="metric-label">Revenue Impact</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-val">${p['Domain Authority']}</span>
+                                    <span class="metric-label">Domain Authority</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Modal
+        window.closeModal = function () {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        renderGrid();
+
+    </script>
+</body>
+
+</html>

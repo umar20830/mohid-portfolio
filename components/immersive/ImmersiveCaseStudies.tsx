@@ -107,23 +107,25 @@ export function ImmersiveCaseStudies() {
                       </p>
 
                       {/* Results Grid */}
-                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+                      <div className="grid grid-cols-2 gap-3 mb-6">
                         {study.results.map((result, resultIndex) => (
                           <motion.div
                             key={result.metric}
-                            className="bg-muted/50 rounded-lg p-3 text-center"
+                            className="bg-muted/50 rounded-lg p-4 flex flex-col items-center justify-center text-center min-h-[90px]"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 * resultIndex }}
                           >
-                            <div className="flex items-center justify-center gap-1 mb-1">
-                              <TrendingUpIcon size={14} className="text-accent" />
-                              <span className="text-lg font-bold text-accent">
-                                {result.change}
+                            <div className="flex items-center justify-center gap-2 mb-2">
+                              <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center">
+                                <TrendingUpIcon size={14} className="text-primary" />
+                              </div>
+                              <span className="text-lg font-bold text-foreground">
+                                {result.after}
                               </span>
                             </div>
-                            <div className="text-xs text-muted-foreground line-clamp-1">
+                            <div className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground whitespace-nowrap">
                               {result.metric}
                             </div>
                           </motion.div>

@@ -202,6 +202,25 @@ export function CheckCircleIcon({ className, size = 24 }: IconProps) {
   );
 }
 
+export function ArrowLeftIcon({ className, size = 24 }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn('', className)}
+    >
+      <line x1="19" y1="12" x2="5" y2="12" />
+      <polyline points="12 19 5 12 12 5" />
+    </svg>
+  );
+}
+
 export function ArrowRightIcon({ className, size = 24 }: IconProps) {
   return (
     <svg
@@ -490,6 +509,7 @@ const iconMap = {
   BarChart: BarChartIcon,
   Users: UsersIcon,
   CheckCircle: CheckCircleIcon,
+  ArrowLeft: ArrowLeftIcon,
   ArrowRight: ArrowRightIcon,
   ArrowUpRight: ArrowUpRightIcon,
   Menu: MenuIcon,
